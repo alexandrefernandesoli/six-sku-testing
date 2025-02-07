@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SKU Generator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Gerador de SKU</h1>
+
+    <div class="select-grid">
+      <div>
+        <label for="conta">Conta</label>
+        <select id="conta">
+          <option value="1">GrupoSixLLP</option>
+        </select>
+      </div>
+      <div>
+        <label for="squad">Squad</label>
+        <select id="squad">
+          <option value="1">Delta</option>
+          <option value="2">Echo</option>
+        </select>
+      </div>
+      <div>
+        <label for="produto">Produto</label>
+        <select id="produto">
+          <option value="1">SUGARSIX</option>
+          <option value="2">FLORASLIM</option>
+          <option value="3">PROSTASLIM</option>
+          <option value="4">ENDOPOWERPRO</option>
+          <option value="5">LIPOGUMMIES</option>
+          <option value="6">FLORALEAN</option>
+          <option value="7">ALPHAGUMMY</option>
+          <option value="8">PUREGUTPRO</option>
+          <option value="9">NERVEBLISS</option>
+          <option value="10">BACKSHIFTPRO</option>
+        </select>
+      </div>
+      <div>
+        <label for="vsl">VSL</label>
+        <select id="vsl">
+          <option value="0">CALLCENTER</option>
+          <option value="1">VSL1</option>
+          <option value="2">VSL2</option>
+          <option value="3">VSL3</option>
+          <option value="4">VSL4</option>
+          <option value="5">VSL5</option>
+          <option value="6">VSL6</option>
+          <option value="7">VSL7</option>
+          <option value="8">VSL8</option>
+          <option value="9">VSL9</option>
+          <option value="10">VSL10</option>
+        </select>
+      </div>
+      <div>
+        <label for="rede">Rede</label>
+        <select id="rede">
+          <option value="1">CALLCENTER</option>
+          <option value="2">FACEBOOK</option>
+          <option value="3">YOUTUBE</option>
+          <option value="4">SEARCH</option>
+          <option value="5">NATIVE</option>
+          <option value="6">AFILIADOS</option>
+          <option value="7">EMAIL</option>
+          <option value="8">SMS</option>
+        </select>
+      </div>
+      <div>
+        <label for="tipo_de_venda">Tipo de Venda</label>
+        <select id="tipo_de_venda">
+          <option value="1">CALLCENTER</option>
+          <option value="2">FRONT</option>
+          <option value="3">BACKREDIRECT</option>
+          <option value="4">UPSELL</option>
+          <option value="5">DOWNSELL</option>
+        </select>
+      </div>
+      <div>
+        <label for="kit">Kit</label>
+        <select id="kit">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+      </div>
+      <div>
+        <label for="preco">Preço</label>
+        <select id="preco">
+          <option value="5">5</option>
+          <option value="19">19</option>
+          <option value="29">29</option>
+          <option value="39">39</option>
+          <option value="49">49</option>
+          <option value="59">59</option>
+          <option value="69">69</option>
+          <option value="79">79</option>
+          <option value="89">89</option>
+          <option value="99">99</option>
+          <option value="109">109</option>
+          <option value="119">119</option>
+          <option value="129">129</option>
+          <option value="147">147</option>
+          <option value="149">149</option>
+          <option value="177">177</option>
+          <option value="198">198</option>
+          <option value="234">234</option>
+          <option value="261">261</option>
+          <option value="294">294</option>
+          <option value="351">351</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="parent-product-config">
+      <div>
+        <label for="handle">Handle</label>
+        <input type="text" id="handle" placeholder="Handle" />
+      </div>
+      <div>
+        <label for="tituloProdutoPai">Título do Produto Pai</label>
+        <input
+          type="text"
+          id="tituloProdutoPai"
+          placeholder="Título Principal do Produto"
+        />
+      </div>
+      <div>
+        <label for="descricaoProdutoPai">Descrição do Produto Pai</label>
+        <textarea
+          id="descricaoProdutoPai"
+          placeholder="Descrição Detalhada do Produto"
+        ></textarea>
+      </div>
+      <div>
+        <label for="produtoPaiCheckbox">Produto Pai?</label>
+        <input type="checkbox" id="produtoPaiCheckbox" />
+      </div>
+    </div>
+
+    <div>
+      <button onclick="addToTable()">Gerar SKU e Adicionar à Tabela</button>
+      <button onclick="copySKU()">Copiar SKU</button>
+      <button onclick="saveToCSV()">Gerar CSV</button>
+      <button onclick="clearTable()" class="warn-button">Limpar Tabela</button>
+    </div>
+
+    <div>
+      <h3>SKU Gerado: <span id="skuDisplay"></span></h3>
+    </div>
+
+    <div>
+      <h3>SKU Decodificado:</h3>
+      <pre id="skuDecoded"></pre>
+    </div>
+
+    <div class="sku-table">
+      <table id="skuTable">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Handle</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Seo title</th>
+            <th>Seo description</th>
+            <th>Vendor</th>
+            <th>Type</th>
+            <th>Tags</th>
+            <th>Active</th>
+            <th>Option1 Name</th>
+            <th>Option1 Value</th>
+            <th>Option2 Name</th>
+            <th>Option2 Value</th>
+            <th>Option3 Name</th>
+            <th>Option3 Value</th>
+            <th>Variant SKU</th>
+            <th>Variant Grams</th>
+            <th>Variant Inventory Qty</th>
+            <th>Variant Price</th>
+            <th>Variant Compare At Price</th>
+            <th>Variant Requires Shipping</th>
+            <th>Variant Taxable</th>
+            <th>Inventory Policy</th>
+            <th>Variant Barcode</th>
+            <th>Variant Weight Unit</th>
+            <th>Cost per item</th>
+            <th>Length</th>
+            <th>Width</th>
+            <th>Height</th>
+            <th>Dimension Unit</th>
+          </tr>
+        </thead>
+        <tbody id="skuTableBody"></tbody>
+      </table>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
