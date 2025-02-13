@@ -1,0 +1,9 @@
+handle,title,description,seo_title,seo_description,vendor,type,tags,active,variant_sku,option_1_name,option_1_value,option_2_name,option_2_value,option_3_name,option_3_value,variant_grams,variant_inventory_qty,variant_price,variant_compare_at_price,variant_requires_shipping,variant_taxable,inventory_policy,variant_barcode,variant_weight_unit,cost_per_item,length,width,height,dimension_unit
+lipogummies-afiliados,LipoGummies - Afiliados,LipoGummies - Afiliados,LipoGummies - Afiliados,LipoGummies - Afiliados,,,,TRUE,A1B1C5D4E6F2G1H89,Bottles,1 Bottle - $89 - D4AF,,,,,,20000,89,,TRUE,TRUE,,,,,2,2,4,in
+lipogummies-afiliados,,,,,,,,TRUE,A1B1C5D4E6F2G3H177,Bottles,3 Bottles - $177 - D4AF,,,,,,20000,177,,TRUE,TRUE,,,,,2,2,4,in
+lipogummies-afiliados,,,,,,,,TRUE,A1B1C5D4E6F2G6H294,Bottles,6 Bottles - $294 - D4AF,,,,,,20000,294,,TRUE,TRUE,,,,,2,2,4,in
+lipogummies-afiliados,,,,,,,,TRUE,A1B1C5D4E6F3G1H69,Bottles,1 Bottle - $69 - D4AB,,,,,,20000,69,,TRUE,TRUE,,,,,2,2,4,in
+lipogummies-afiliados,,,,,,,,TRUE,A1B1C5D4E6F3G3H147,Bottles,3 Bottles - $147 - D4AB,,,,,,20000,147,,TRUE,TRUE,,,,,2,2,4,in
+lipogummies-afiliados,,,,,,,,TRUE,A1B1C5D4E6F3G6H234,Bottles,6 Bottles - $234 - D4AB,,,,,,20000,234,,TRUE,TRUE,,,,,2,2,4,in
+lipogummies-upsell,LipoGummies - Upsell,LipoGummies - Upsell,LipoGummies - Upsell,LipoGummies - Upsell,,,,TRUE,A1B1C5D4E9F4G9H198,Bottles,9 Bottles - $198 - D4GU,,,,,,20000,198,,TRUE,TRUE,,,,,2,2,4,in
+lipogummies-downsell,LipoGummies - Downsell,LipoGummies - Downsell,LipoGummies - Downsell,LipoGummies - Downsell,,,,TRUE,A1B1C5D4E9F5G6H132,Bottles,6 Bottles - $132 - D4GD,,,,,,20000,132,,TRUE,TRUE,,,,,2,2,4,in

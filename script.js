@@ -36,6 +36,7 @@ const skuData = {
     "AFILIADOS",
     "EMAIL",
     "SMS",
+    "GERAL",
   ],
   tipo_de_venda: ["CALLCENTER", "FRONT", "BACKREDIRECT", "UPSELL", "DOWNSELL"],
   kit: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
@@ -51,10 +52,14 @@ const skuData = {
     "89",
     "99",
     "109",
+    "114",
+    "117",
     "119",
     "129",
+    "132",
     "147",
     "149",
+    "174",
     "177",
     "198",
     "234",
@@ -188,18 +193,20 @@ function addToTable() {
       type: "", // Tipo 'Produto Pai' para fácil identificação
       tags: "", // Tag para filtrar se necessário
       active: "TRUE",
-      variant_sku: sku, // SKU 'PAI-...'
       option_1_name: "Bottles",
       option_1_value: `${data.kit} ${
         data.kit === "1" ? "Bottle" : "Bottles"
-      } - ${data.squad[0]}${vslNumber}${data.rede[0]}${data.tipo_de_venda[0]}`,
+      } - $${data.preco} - ${data.squad[0]}${vslNumber}${data.rede[0]}${
+        data.tipo_de_venda[0]
+      }`,
       option_2_name: "",
       option_2_value: "",
       option_3_name: "",
       option_3_value: "",
+      variant_sku: sku, // SKU 'PAI-...'
       variant_grams: "",
       variant_inventory_qty: "20000", // Estoque pode ser vazio ou 'N/A'
-      variant_price: "", // Preço pode ser vazio ou 'N/A'
+      variant_price: data.preco,
       variant_compare_at_price: "",
       variant_requires_shipping: "FALSE", // Produto pai não precisa de frete direto
       variant_taxable: "FALSE", // Produto pai pode não ser diretamente taxável
@@ -227,15 +234,17 @@ function addToTable() {
       type: "",
       tags: "",
       active: "TRUE",
-      variant_sku: sku,
       option_1_name: "Bottles",
       option_1_value: `${data.kit} ${
         data.kit === "1" ? "Bottle" : "Bottles"
-      } - ${data.squad[0]}${vslNumber}${data.rede[0]}${data.tipo_de_venda[0]}`,
+      } - $${data.preco} - ${data.squad[0]}${vslNumber}${data.rede[0]}${
+        data.tipo_de_venda[0]
+      }`,
       option_2_name: "",
       option_2_value: "",
       option_3_name: "",
       option_3_value: "",
+      variant_sku: sku,
       variant_grams: "",
       variant_inventory_qty: "20000",
       variant_price: data.preco,
@@ -264,46 +273,55 @@ function addToTable() {
 }
 
 function updateTableRow(rowElement, rowData) {
-  rowElement.innerHTML = `
-      <td><button class="remove-btn" onclick="removeRow('${rowData.variant_sku}')">X</button></td>
-      <td data-field="handle">${rowData.handle}</td>
-      <td data-field="title">${rowData.title}</td>
-      <td data-field="description">${rowData.description}</td>
-      <td data-field="seo_title">${rowData.seo_title}</td>
-      <td data-field="seo_description">${rowData.seo_description}</td>
-      <td data-field="vendor">${rowData.vendor}</td>
-      <td data-field="type">${rowData.type}</td>
-      <td data-field="tags">${rowData.tags}</td>
-      <td data-field="active">${rowData.active}</td>
-      <td data-field="option_1_name">${rowData.option_1_name}</td>
-      <td data-field="option_1_value">${rowData.option_1_value}</td>
-      <td data-field="option_2_name">${rowData.option_2_name}</td>
-      <td data-field="option_2_value">${rowData.option_2_value}</td>
-      <td data-field="option_3_name">${rowData.option_3_name}</td>
-      <td data-field="option_3_value">${rowData.option_3_value}</td>
-      <td data-field="variant_sku">${rowData.variant_sku}</td>
-      <td data-field="variant_grams">${rowData.variant_grams}</td>
-      <td data-field="variant_inventory_qty">${rowData.variant_inventory_qty}</td>
-      <td data-field="variant_price">${rowData.variant_price}</td>
-      <td data-field="variant_compare_at_price">${rowData.variant_compare_at_price}</td>
-      <td data-field="variant_requires_shipping">${rowData.variant_requires_shipping}</td>
-      <td data-field="variant_taxable">${rowData.variant_taxable}</td>
-      <td data-field="inventory_policy">${rowData.inventory_policy}</td>
-      <td data-field="variant_barcode">${rowData.variant_barcode}</td>
-      <td data-field="variant_weight_unit">${rowData.variant_weight_unit}</td>
-      <td data-field="cost_per_item">${rowData.cost_per_item}</td>
-      <td data-field="length">${rowData.length}</td>
-      <td data-field="width">${rowData.width}</td>
-      <td data-field="height">${rowData.height}</td>
-      <td data-field="dimension_unit">${rowData.dimension_unit}</td>
-  `;
+  // Create remove button cell first
+  const removeCell = document.createElement("td");
+  const removeButton = document.createElement("button");
+  removeButton.className = "remove-btn";
+  removeButton.textContent = "X";
+  removeButton.onclick = () => removeRow(rowData.variant_sku);
+  removeCell.appendChild(removeButton);
+  rowElement.appendChild(removeCell);
 
-  // Make cells editable after row is created
-  Array.from(rowElement.cells).forEach((cell, index) => {
-    if (index > 0) {
-      // Skip the first cell (remove button)
-      cell.addEventListener("click", makeCellEditable);
-    }
+  // Add the rest of the cells
+  const fields = [
+    "handle",
+    "title",
+    "description",
+    "seo_title",
+    "seo_description",
+    "vendor",
+    "type",
+    "tags",
+    "active",
+    "option_1_name",
+    "option_1_value",
+    "option_2_name",
+    "option_2_value",
+    "option_3_name",
+    "option_3_value",
+    "variant_sku",
+    "variant_grams",
+    "variant_inventory_qty",
+    "variant_price",
+    "variant_compare_at_price",
+    "variant_requires_shipping",
+    "variant_taxable",
+    "inventory_policy",
+    "variant_barcode",
+    "variant_weight_unit",
+    "cost_per_item",
+    "length",
+    "width",
+    "height",
+    "dimension_unit",
+  ];
+
+  fields.forEach((field) => {
+    const cell = document.createElement("td");
+    cell.dataset.field = field;
+    cell.textContent = rowData[field];
+    cell.addEventListener("click", makeCellEditable);
+    rowElement.appendChild(cell);
   });
 }
 
@@ -343,7 +361,40 @@ function saveToCSV() {
     return;
   }
 
-  const headers = Object.keys(tableData[0]).join(",");
+  const headersTXT = [
+    "Handle",
+    "Title",
+    "Description",
+    "Seo title",
+    "Seo description",
+    "Vendor",
+    "Type",
+    "Tags",
+    "Active",
+    "Option1 Name",
+    "Option1 Value",
+    "Option2 Name",
+    "Option2 Value",
+    "Option3 Name",
+    "Option3 Value",
+    "Variant SKU",
+    "Variant Grams",
+    "Variant Inventory Qty",
+    "Variant Price",
+    "Variant Compare At Price",
+    "Variant Requires Shipping",
+    "Variant Taxable",
+    "Inventory Policy",
+    "Variant Barcode",
+    "Variant Weight Unit",
+    "Cost per item",
+    "Length",
+    "Width",
+    "Height",
+    "Dimension Unit",
+  ];
+
+  const headers = headersTXT.join(",");
   const csvRows = tableData.map((row) => Object.values(row).join(","));
   const csvData =
     "data:text/csv;charset=utf-8," + headers + "\n" + csvRows.join("\n");
@@ -411,4 +462,209 @@ function updateCellContent(cell, rowIndex, fieldName, newValue) {
   currentlyEditingCell = null;
 }
 
+function saveCurrentTableAsNewProfile() {
+  const profileName = prompt("Enter a name for this profile:");
+  if (!profileName) return; // User cancelled or entered empty name
+
+  const profiles = JSON.parse(localStorage.getItem("savedProfiles") || "{}");
+
+  // Save current table data under the profile name
+  profiles[profileName] = {
+    timestamp: new Date().toISOString(),
+    data: tableData,
+  };
+
+  localStorage.setItem("savedProfiles", JSON.stringify(profiles));
+  updateProfilesList();
+}
+
+function loadProfile(profileName) {
+  const profiles = JSON.parse(localStorage.getItem("savedProfiles") || "{}");
+  const profile = profiles[profileName];
+
+  if (profile) {
+    tableData = [...profile.data];
+    saveToLocalStorage();
+    populateTable();
+  }
+}
+
+function deleteProfile(profileName) {
+  if (!confirm(`Are you sure you want to delete profile "${profileName}"?`))
+    return;
+
+  const profiles = JSON.parse(localStorage.getItem("savedProfiles") || "{}");
+  delete profiles[profileName];
+  localStorage.setItem("savedProfiles", JSON.stringify(profiles));
+  updateProfilesList();
+}
+
+function updateProfilesList() {
+  const profilesContainer = document.getElementById("profilesContainer");
+  const profiles = JSON.parse(localStorage.getItem("savedProfiles") || "{}");
+
+  profilesContainer.innerHTML = "";
+
+  Object.entries(profiles).forEach(([name, profile]) => {
+    const profileCard = document.createElement("div");
+    profileCard.className = "profile-card";
+
+    const date = new Date(profile.timestamp).toLocaleDateString();
+    const itemCount = profile.data.length;
+
+    profileCard.innerHTML = `
+      <h3>${name}</h3>
+      <p>Items: ${itemCount}</p>
+      <p>Saved: ${date}</p>
+      <div class="profile-actions">
+        <button onclick="loadProfile('${name}')">Load</button>
+        <button onclick="deleteProfile('${name}')" class="warn-button">Delete</button>
+      </div>
+    `;
+
+    profilesContainer.appendChild(profileCard);
+  });
+}
+
+// Call this when page loads
 loadFromLocalStorage();
+updateProfilesList();
+
+function updateNewValueOptions() {
+  const parameter = document.getElementById("duplicateParameter").value;
+  const newValueSelect = document.getElementById("newValue");
+
+  // Clear existing options
+  newValueSelect.innerHTML = "";
+
+  // Add new options based on selected parameter
+  PARAMETER_OPTIONS[parameter].forEach((option) => {
+    const optionElement = document.createElement("option");
+    optionElement.value = option.value;
+    optionElement.textContent = option.label;
+    newValueSelect.appendChild(optionElement);
+  });
+}
+
+function duplicateTableWithNewParameter() {
+  const parameter = document.getElementById("duplicateParameter").value;
+  const newValue = document.getElementById("newValue").value;
+  const handleSuffix = document.getElementById("newHandle").value;
+
+  // Create new entries based on current tableData
+  const newEntries = tableData
+    .map((row) => {
+      // Create a deep copy of the row
+      const newRow = { ...row };
+
+      // Update the handle if suffix is provided
+      if (handleSuffix) {
+        newRow.handle = row.handle + handleSuffix;
+      }
+
+      // Update the select element with the new value
+      const selectElement = document.getElementById(parameter);
+      if (selectElement) {
+        selectElement.value = newValue;
+      }
+
+      // Generate new SKU based on current selections
+      const newSku = generateSKU();
+      if (!newSku) return null; // Skip if SKU generation fails
+
+      // Update SKU-related fields
+      newRow.variant_sku = newSku;
+
+      // Update option_1_value based on new parameters
+      const decodedSku = decodeSKU(newSku);
+      const vslNumber =
+        decodedSku.vsl === "CALLCENTER" ? 0 : decodedSku.vsl.replace("VSL", "");
+      newRow.option_1_value = `${decodedSku.kit} ${
+        decodedSku.kit === "1" ? "Bottle" : "Bottles"
+      } - ${decodedSku.squad[0]}${vslNumber}${decodedSku.rede[0]}${
+        decodedSku.tipo_de_venda[0]
+      }`;
+
+      // Update price if that's the parameter being changed
+      if (parameter === "preco") {
+        newRow.variant_price = newValue;
+      }
+
+      return newRow;
+    })
+    .filter((row) => row !== null); // Remove any failed entries
+
+  // Add new entries to tableData
+  tableData.push(...newEntries);
+
+  // Save and update display
+  saveToLocalStorage();
+  populateTable();
+
+  // Reset the handle suffix input
+  document.getElementById("newHandle").value = "";
+}
+
+// Update the updateTableRow function to properly handle the remove button
+function updateTableRow(rowElement, rowData) {
+  // Create remove button cell first
+  const removeCell = document.createElement("td");
+  const removeButton = document.createElement("button");
+  removeButton.className = "remove-btn";
+  removeButton.textContent = "X";
+  removeButton.onclick = () => removeRow(rowData.variant_sku);
+  removeCell.appendChild(removeButton);
+  rowElement.appendChild(removeCell);
+
+  // Add the rest of the cells
+  const fields = [
+    "handle",
+    "title",
+    "description",
+    "seo_title",
+    "seo_description",
+    "vendor",
+    "type",
+    "tags",
+    "active",
+    "option_1_name",
+    "option_1_value",
+    "option_2_name",
+    "option_2_value",
+    "option_3_name",
+    "option_3_value",
+    "variant_sku",
+    "variant_grams",
+    "variant_inventory_qty",
+    "variant_price",
+    "variant_compare_at_price",
+    "variant_requires_shipping",
+    "variant_taxable",
+    "inventory_policy",
+    "variant_barcode",
+    "variant_weight_unit",
+    "cost_per_item",
+    "length",
+    "width",
+    "height",
+    "dimension_unit",
+  ];
+
+  fields.forEach((field) => {
+    const cell = document.createElement("td");
+    cell.dataset.field = field;
+    cell.textContent = rowData[field];
+    cell.addEventListener("click", makeCellEditable);
+    rowElement.appendChild(cell);
+  });
+}
+
+// Add event listener for parameter change
+document
+  .getElementById("duplicateParameter")
+  .addEventListener("change", updateNewValueOptions);
+
+// Initialize new value options when page loads
+document.addEventListener("DOMContentLoaded", () => {
+  updateNewValueOptions();
+});

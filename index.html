@@ -64,6 +64,7 @@
           <option value="6">AFILIADOS</option>
           <option value="7">EMAIL</option>
           <option value="8">SMS</option>
+          <option value="9">GERAL</option>
         </select>
       </div>
       <div>
@@ -105,10 +106,14 @@
           <option value="89">89</option>
           <option value="99">99</option>
           <option value="109">109</option>
+          <option value="114">114</option>
+          <option value="117">117</option>
           <option value="119">119</option>
           <option value="129">129</option>
+          <option value="132">132</option>
           <option value="147">147</option>
           <option value="149">149</option>
+          <option value="174">174</option>
           <option value="177">177</option>
           <option value="198">198</option>
           <option value="234">234</option>
@@ -161,6 +166,54 @@
       <pre id="skuDecoded"></pre>
     </div>
 
+    <div class="profiles-section">
+      <div>
+        <button onclick="saveCurrentTableAsNewProfile()">
+          Save Current Table as Profile
+        </button>
+      </div>
+      <h2>Saved Profiles</h2>
+      <div id="profilesContainer" class="profiles-grid">
+        <!-- Profile cards will be inserted here -->
+      </div>
+    </div>
+
+    <div class="duplication-controls">
+      <h3>Duplicate Table Entries</h3>
+      <div class="duplication-options">
+        <div>
+          <label for="duplicateParameter">Parameter to Change:</label>
+          <select id="duplicateParameter">
+            <option value="rede">Rede</option>
+            <option value="vsl">VSL</option>
+            <option value="tipo_de_venda">Tipo de Venda</option>
+            <option value="kit">Kit</option>
+            <option value="preco">Preço</option>
+          </select>
+        </div>
+        <div>
+          <label for="newValue">New Value:</label>
+          <select id="newValue">
+            <!-- Will be populated dynamically based on selected parameter -->
+          </select>
+        </div>
+        <div>
+          <label for="newHandle">New Handle Suffix:</label>
+          <input
+            type="text"
+            id="newHandle"
+            placeholder="e.g. -facebook or -youtube"
+          />
+        </div>
+        <button
+          onclick="duplicateTableWithNewParameter()"
+          class="duplicate-button"
+        >
+          Duplicate Table with New Parameter
+        </button>
+      </div>
+    </div>
+
     <div class="sku-table">
       <table id="skuTable">
         <thead>
@@ -202,6 +255,7 @@
       </table>
     </div>
 
+    <script src="js/parameterMappings.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
